@@ -19,7 +19,7 @@ connectDB();
 // Middleware to serve static files
 // Middleware
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: 'https://tubular-nougat-1d6124.netlify.app',
     credentials: true
   }));
   app.use(express.json());
