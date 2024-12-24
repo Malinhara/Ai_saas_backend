@@ -19,7 +19,7 @@ connectDB();
 // Middleware to serve static files
 // Middleware
 app.use(cors({
-    origin: 'https://tubular-nougat-1d6124.netlify.app/',
+    origin: 'https://ai-saas-frontend.vercel.app',
     credentials: true
   }));
   app.use(express.json());
