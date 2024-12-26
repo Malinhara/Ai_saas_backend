@@ -111,7 +111,7 @@ const GenerateService = {
           provider: { type: 'microsoft', voice_id: voiceid },
           input: prompt,
         },
-        config: { fluent: false, pad_audio: 0.0 },
+       config: {fluent: false, pad_audio: 0.0, stitch: true},
       }),
     };
   
@@ -191,7 +191,7 @@ const GenerateService = {
           subtitles: false,
           audio_url: audiolink,
         },
-        config: { fluent: false, pad_audio: 0.0 },
+        config: {fluent: false, pad_audio: 0.0, stitch: true},
       }),
     };
   
