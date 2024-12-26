@@ -3,7 +3,7 @@ const openAi = require("openai");
 const fs =  require('fs');
 const path = require('path');
 const app = express();
-const config = require('../config'); // Correct for CommonJS
+require('dotenv').config();
 const User = require('../model/user');
 
 // Serve files from the 'Audio' folder
@@ -14,7 +14,7 @@ const speechFile = path.join(__dirname, 'Audio', 'output.mp3'); // Path to save 
 app.use(express.json()); // To parse JSON requests
 // // Configure OpenAI API
 const conn = new openAi.OpenAI({
-    apiKey: config.GPT_KEY
+    apiKey: process.env.GPT_API_KEY
   });
 
 
@@ -47,40 +47,7 @@ const GenerateService = {
     }
   },
 
-  async createAudio(userData) {
-
-    const { text , voice } = userData;
-
-
-    if (!text || !voice) {
-        return { success: false, statusCode: 400, error: 'Field is required' };
-      }
-
-    try{
-
-    const mp3 = await conn.audio.speech.create({
-        model: "tts-1",
-        voice: voice,
-        input: text,
-      });
-
-       // Convert the arrayBuffer to a buffer and save the file
-      const buffer = Buffer.from(await mp3.arrayBuffer());
-      await fs.promises.writeFile(speechFile, buffer);
-
-          // Return the audio file URL to the frontend
-      const audioUrl = `http://localhost:3001/Services/Audio/output.mp3`; // URL to access the audio file (modify as necessary)
-      return {statusCode: 201, success: true, audioUrl };
-
-     } 
-     catch (error) {
-
-          console.error('Error generating audio:', error.message);
-          return { statusCode: 500, success: false, error: error.message };
-
-    }
-   
-  },
+ 
 
 
   async createVideo (userData) {
@@ -101,7 +68,7 @@ const GenerateService = {
       headers: {
         accept: 'application/json',
         'content-type': 'application/json',
-        authorization: config.DDI,
+        authorization: process.env.DDI,
       },
       body: JSON.stringify({
         source_url: imagelink,
@@ -182,7 +149,7 @@ const GenerateService = {
       headers: {
         accept: 'application/json',
         'content-type': 'application/json',
-        authorization: config.DDI,
+        authorization: process.env.DDI,
       },
       body: JSON.stringify({
         source_url: imagelink,
@@ -251,7 +218,7 @@ const GenerateService = {
       method: 'GET',
       headers: {
         accept: 'application/json',
-        authorization: config.DDI
+        authorization: process.env.DDI
       }
     };
 
@@ -278,7 +245,7 @@ const GenerateService = {
       method: 'GET',
       headers: {
         accept: 'application/json',
-        authorization: config.DDI
+        authorization: process.env.DDI
       }
     };
 
@@ -310,7 +277,7 @@ const GenerateService = {
       method: 'GET',
       headers: {
         accept: 'application/json',
-        authorization: config.DDI
+        authorization: process.env.DDI
       }
     };
 
@@ -353,7 +320,7 @@ const GenerateService = {
       headers: {
         accept: 'application/json',
         'content-type': 'application/json',
-        authorization: config.DDI,
+        authorization: process.env.DDI,
       },
       body: JSON.stringify({
         presenter_id: presenterid,
@@ -439,7 +406,7 @@ const GenerateService = {
       headers: {
         accept: 'application/json',
         'content-type': 'application/json',
-        authorization:config.DDI,
+        authorization:process.env.DDI,
       },
       body: JSON.stringify({
         presenter_id: presenterid,
