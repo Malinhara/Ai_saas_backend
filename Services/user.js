@@ -2,7 +2,6 @@ const User = require('../model/user');
 const crypto = require('crypto');
 const Auth = require('../Auth/auth'); // Adjust the path as necessary
 const nodemailer = require('nodemailer');
-const config = require('../config'); // Correct for CommonJS
 require('dotenv').config();
 
 let tempCodeStorage = {};
@@ -184,8 +183,8 @@ const userService = {
       const transporter = nodemailer.createTransport({
         service: 'gmail', // Use your email provider
         auth: {
-          user: config.EMAIL, // Your email address
-          pass: config.PASSWORD, // Your email password or app-specific password
+          user: process.env.EMAIL_USER, // Your email address
+          pass: process.env.EMAIL_PASS, // Your email password or app-specific password
         },
       });
 
@@ -193,7 +192,7 @@ const userService = {
 
       // Email content
       const mailOptions = {
-        from:config.EMAIL,
+        from:process.env.EMAIL_USER,
         to: email,
         subject: 'Your Verification Code',
         text: `Your verification code is ${code}`,
