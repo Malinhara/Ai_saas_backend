@@ -6,7 +6,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const userRouter = require("./Route/user");
-const connectDB = require('./Dbconnection/dbConnction');
+// const connectDB = require('./Dbconnection/dbConnction');
 const generateRouter = require("./Route/generate");
 // Load environment variables from .env file
 dotenv.config();
@@ -14,7 +14,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-connectDB();
+// connectDB();
 
 // Middleware to serve static files
 // Middleware
