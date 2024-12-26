@@ -9,12 +9,12 @@ const User = require('../model/user');
 // Serve files from the 'Audio' folder
 app.use('/audio', express.static(path.join(__dirname, 'Audio'))); // Serve audio files statically from the Audio folder
 
-const speechFile = path.join(__dirname, 'Audio', 'output.mp3'); // Path to save the audio file
+const gpt_key=process.env.GPT_API_KEY
 
 app.use(express.json()); // To parse JSON requests
 // // Configure OpenAI API
 const conn = new openAi.OpenAI({
-    apiKey: process.env.GPT_API_KEY
+    apiKey: gpt_key
   });
 
 
