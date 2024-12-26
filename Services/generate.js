@@ -14,7 +14,7 @@ const speechFile = path.join(__dirname, 'Audio', 'output.mp3'); // Path to save 
 app.use(express.json()); // To parse JSON requests
 // // Configure OpenAI API
 const conn = new openAi.OpenAI({
-    apiKey: config.GPT_KEY
+    apiKey: config.OPENAI_API_KEY
   });
 
 
