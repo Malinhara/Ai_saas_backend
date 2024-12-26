@@ -4,19 +4,18 @@ const fs =  require('fs');
 const path = require('path');
 const app = express();
 require('dotenv').config();
+const config = require('../config'); // Correct for CommonJS
 const User = require('../model/user');
 
 // Serve files from the 'Audio' folder
 app.use('/audio', express.static(path.join(__dirname, 'Audio'))); // Serve audio files statically from the Audio folder
 
-const gpt_key=process.env.GPT_API_KEY
 
 app.use(express.json()); // To parse JSON requests
 // // Configure OpenAI API
 const conn = new openAi.OpenAI({
-    apiKey: gpt_key
+    apiKey: config.GPT_KEY
   });
-
 
 
 const GenerateService = {
