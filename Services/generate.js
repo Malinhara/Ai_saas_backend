@@ -192,7 +192,7 @@ const GenerateService = {
           audio_url: audiolink,
         },
         config: { fluent: false, pad_audio: 0.0 },
-        face: {size: 150, overlap: 'YES', face_occluded: true},
+        face: {size: 150}
       }),
     };
   
