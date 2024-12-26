@@ -32,7 +32,7 @@ const GenerateService = {
     try {
       // Call the OpenAI API to generate an image
       const response = await conn.images.generate({
-        model: "dall-e-3",
+        model: "dall-e-2",
         prompt: prompt,
         n: 1,
         size: "512x512",
