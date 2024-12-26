@@ -244,35 +244,6 @@ const GenerateService = {
   },
   
 
-
-  async getVoices() {
-
-    const url = 'https://api.d-id.com/tts/voices?provider=microsoft';
-    const options = {
-      method: 'GET',
-      headers: {
-        accept: 'application/json',
-        authorization: config.DDI
-      }
-    };
-
-
-    try {
-      const response = await fetch(url, options);
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(`HTTP Error! Status: ${response.status} - ${errorData.message}`);
-      }
-      const data = await response.json();
-      return { success: true, statusCode: 201, data };
-    } catch (error) {
-
-      return { success: false, statusCode: 500, error: error.message };
-    }
-  },
-
-
-
     async getVoices() {
 
     const url = 'https://api.d-id.com/tts/voices?provider=microsoft';
