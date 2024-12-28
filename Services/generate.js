@@ -24,6 +24,7 @@ const GenerateService = {
 async createImage(userData) {
       const { prompt } = userData;
   
+     console.log(config.OPENAI_API_KEY);
       if (!prompt) {
         return { success: false, statusCode: 400, error: 'Prompt is required' };
       }
@@ -51,6 +52,7 @@ async createImage(userData) {
         });
   
         const imageUrl = response.data[0].url;
+         console.log(imageUrl);
   
         return { success: true, statusCode: 201, data: { imageUrl } };
   
