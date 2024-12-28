@@ -21,14 +21,18 @@ const conn = new openAi.OpenAI({
 
 const GenerateService = {
 
-async createImage(userData) {
+    async createImage(userData) {
+
       const { prompt } = userData;
+
+      console.log(config.GPT_KEY)
   
-     console.log(config.OPENAI_API_KEY);
-    
       if (!prompt) {
         return { success: false, statusCode: 400, error: 'Prompt is required' };
       }
+
+      console.log(prompt)
+  
   
       // Define the character type, style, and description
       const character_type = "person";  // Fix the typo (previously 'pearson')
@@ -37,14 +41,16 @@ async createImage(userData) {
   
       // Function to generate the prompt string
       const create_prompt = (character_type, style, description) => {
-        return A ${character_type}, in a ${style} style, with ${description}.;
+        return `A ${character_type}, in a ${style} style, with ${description}.`;
       };
+
+      
   
       // Generate the prompt
       const generated_prompt = create_prompt(character_type, style, description);
 
-
-       console.log(generated_prompt);
+      console.log(generated_prompt)
+  
       try {
         // Call the OpenAI API to generate an image
         const response = await conn.images.generate({
@@ -53,11 +59,12 @@ async createImage(userData) {
           n: 1,
           size: "1024x1024",  // Adjust the size if needed
         });
-
-        console.log(response);
   
         const imageUrl = response.data[0].url;
-         console.log(imageUrl);
+
+        
+      console.log(prompt)
+  
   
         return { success: true, statusCode: 201, data: { imageUrl } };
   
