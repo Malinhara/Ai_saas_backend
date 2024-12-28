@@ -25,6 +25,7 @@ async createImage(userData) {
       const { prompt } = userData;
   
      console.log(config.OPENAI_API_KEY);
+    
       if (!prompt) {
         return { success: false, statusCode: 400, error: 'Prompt is required' };
       }
@@ -41,7 +42,9 @@ async createImage(userData) {
   
       // Generate the prompt
       const generated_prompt = create_prompt(character_type, style, description);
-  
+
+
+       console.log(generated_prompt);
       try {
         // Call the OpenAI API to generate an image
         const response = await conn.images.generate({
@@ -50,6 +53,8 @@ async createImage(userData) {
           n: 1,
           size: "1024x1024",  // Adjust the size if needed
         });
+
+        console.log(response);
   
         const imageUrl = response.data[0].url;
          console.log(imageUrl);
