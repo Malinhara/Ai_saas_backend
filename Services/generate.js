@@ -21,31 +21,43 @@ const conn = new openAi.OpenAI({
 
 const GenerateService = {
 
-  async createImage(userData) {
-    const { prompt } = userData;
-
-    if (!prompt) {
-      return { success: false, statusCode: 400, error: 'Prompt is required' };
-    }
-
-
-    try {
-      // Call the OpenAI API to generate an image
-      const response = await conn.images.generate({
-        model: "dall-e-3",
-        prompt: prompt,
-        n: 1,
-        size: "512x512",
-      });
-
-      const imageUrl = response.data[0].url;
-
-      return { success: true, statusCode: 201, data: { imageUrl } };
-
-    } catch (error) {
-      return { success: false, statusCode: 500, error: error.message };
-    }
-  },
+async createImage(userData) {
+      const { prompt } = userData;
+  
+      if (!prompt) {
+        return { success: false, statusCode: 400, error: 'Prompt is required' };
+      }
+  
+      // Define the character type, style, and description
+      const character_type = "person";  // Fix the typo (previously 'pearson')
+      const style = "portrait";
+      const description = prompt;
+  
+      // Function to generate the prompt string
+      const create_prompt = (character_type, style, description) => {
+        return `A ${character_type}, in a ${style} style, with ${description}.`;
+      };
+  
+      // Generate the prompt
+      const generated_prompt = create_prompt(character_type, style, description);
+  
+      try {
+        // Call the OpenAI API to generate an image
+        const response = await conn.images.generate({
+          model: "dall-e-3",  // Ensure the model version is correct (dall-e-2 vs dall-e-3)
+          prompt: generated_prompt,  // Use the generated prompt here
+          n: 1,
+          size: "1024x1024",  // Adjust the size if needed
+        });
+  
+        const imageUrl = response.data[0].url;
+  
+        return { success: true, statusCode: 201, data: { imageUrl } };
+  
+      } catch (error) {
+        return { success: false, statusCode: 500, error: error.message };
+      }
+    },
 
   async createAudio(userData) {
 
