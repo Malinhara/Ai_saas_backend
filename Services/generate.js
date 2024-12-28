@@ -21,51 +21,68 @@ const conn = new openAi.OpenAI({
 
 const GenerateService = {
 
-async createImage(userData) {
-      const { prompt } = userData;
+  async createImage(userData) {
+    const { prompt } = userData;
   
-     console.log(config.OPENAI_API_KEY);
-    
-      if (!prompt) {
-        return { success: false, statusCode: 400, error: 'Prompt is required' };
+ 
+  
+    if (!prompt) {
+      return { success: false, statusCode: 400, error: "Prompt is required" };
+    }
+  
+  
+    // Define the character type, style, and description
+    const character_type = "person"; // Fix the typo (previously 'pearson')
+    const style = "portrait";
+    const description = prompt;
+  
+    // Function to generate the prompt string
+    const create_prompt = (character_type, style, description) => {
+      return `A ${character_type}, in a ${style} style, with ${description}.`;
+    };
+  
+    // Generate the prompt
+    const generated_prompt = create_prompt(character_type, style, description);
+  
+    // Prepare data and headers for the OpenAI API request
+    const data = JSON.stringify({
+      model: "dall-e-3",
+      prompt: generated_prompt,
+      n: 1,
+      size: "1024x1024",
+    });
+  
+    const headers = {
+      Authorization: `Bearer ${config.GPT_KEY}`, // Add your actual GPT key here
+      "Content-Type": "application/json",
+    };
+  
+    try {
+      // Make the API request using fetch
+      const response = await fetch("https://api.openai.com/v1/images/generations", {
+        method: "POST",
+        headers: headers,
+        body: data,
+      });
+  
+      if (!response.ok) {
+        // Handle HTTP errors
+        const errorData = await response.json();
+        console.error("Error response from OpenAI API:", errorData);
+        return { success: false, statusCode: response.status, error: errorData.error };
       }
   
-      // Define the character type, style, and description
-      const character_type = "person";  // Fix the typo (previously 'pearson')
-      const style = "portrait";
-      const description = prompt;
+      const responseData = await response.json();
+      const imageUrl = responseData.data[0].url;
   
-      // Function to generate the prompt string
-      const create_prompt = (character_type, style, description) => {
-        return `A ${character_type}, in a ${style} style, with ${description}.`;
-      };
   
-      // Generate the prompt
-      const generated_prompt = create_prompt(character_type, style, description);
-
-
-       console.log(generated_prompt);
-      try {
-        // Call the OpenAI API to generate an image
-        const response = await conn.images.generate({
-          model: "dall-e-3",  // Ensure the model version is correct (dall-e-2 vs dall-e-3)
-          prompt: generated_prompt,  // Use the generated prompt here
-          n: 1,
-          size: "1024x1024",  // Adjust the size if needed
-        });
-
-        console.log(response);
-  
-        const imageUrl = response.data[0].url;
-         console.log(imageUrl);
-  
-        return { success: true, statusCode: 201, data: { imageUrl } };
-  
-      } catch (error) {
-        return { success: false, statusCode: 500, error: error.message };
-      }
-    },
-
+      return { success: true, statusCode: 201, data: { imageUrl } };
+    } catch (error) {
+      // Handle network or other errors
+      console.error("Error generating image:", error);
+      return { success: false, statusCode: 500, error: error.message };
+    }
+  },
   async createAudio(userData) {
 
     const { text , voice } = userData;
