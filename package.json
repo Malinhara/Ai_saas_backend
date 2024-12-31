@@ -19,6 +19,7 @@
     "nodemailer": "^6.9.16",
     "openai": "^4.77.0",
     "together-ai": "^0.10.0",
+    "cron": "^3.3.2",
     "twitter-api-v2": "^1.19.0"
   }
 }
