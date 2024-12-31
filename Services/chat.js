@@ -59,19 +59,9 @@ const ChatService = {
             // Find the user by email to get their personality
             const user = await User.findOne({ email });
     
-            if (!user) {
-                throw new Error('User not found.');
-            }
-    
-            const personality = user.personality;
-    
-            // If personality is not set, throw an error
-            if (!personality) {
-                throw new Error('Personality is not set for this user.');
-            }
-    
+         
             // Customize system message using the user's personality
-            const systemMessage = `You are a chatbot with the personality of: ${personality}. You should respond to the 
+            const systemMessage = `You are a chatbot with the personality. You should respond to the 
             user in a way that reflects this personality. Be friendly, helpful, and engaging in your tone.`;
             
             // Call OpenAI API for the response
