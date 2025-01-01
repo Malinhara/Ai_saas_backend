@@ -313,7 +313,7 @@ const userService = {
   
 
   // Main user Twitter post function
-  async  userTwitterPost(userData) {
+   async  userTwitterPost(userData) {
     const { tweet, schedule, email } = userData;
   
     // Validate input
@@ -378,7 +378,6 @@ const userService = {
       };
     }
   }
-
   
   
 };
