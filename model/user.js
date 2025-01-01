@@ -9,8 +9,7 @@ const userSchema = new mongoose.Schema({
   appKey: { type: String, required: false },
   appSecret: { type: String, required: false },
   accessToken: { type: String, required: false },
-  accessSecret: { type: String, required: false },
-  personality:{type:String, require:false}
+  accessSecret: { type: String, required: false }
  
 });
 
