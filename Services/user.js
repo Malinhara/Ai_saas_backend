@@ -285,7 +285,7 @@ const userService = {
   },
   
   
-  async scheduleTweet(tweet, scheduleTime, twitterV1Client) {
+   async scheduleTweet(tweet, scheduleTime, twitterV1Client) {
     // Validate scheduleTime format (e.g., "HH:mm")
     if (!scheduleTime || !scheduleTime.match(/^\d{2}:\d{2}$/)) {
       throw new Error('Invalid schedule format. Expected format: "HH:mm".');
@@ -300,7 +300,7 @@ const userService = {
       cronExpression,
       async () => {
         try {
-          const tweetData = await twitterV1Client.tweet(tweet); // Post the tweet
+          const tweetData = await twitterV1Client.v2.tweet(tweet); // Post the tweet
           console.log('Scheduled tweet posted successfully:', tweetData);
         } catch (error) {
           console.error('Error posting scheduled tweet:', error);
